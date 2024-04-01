@@ -1,7 +1,7 @@
 import express from 'express';
 import { connect } from 'mongoose';
 import 'dotenv/config'
-import { router as userRoutes } from './features/user/user-routes.js';
+import userRoutes from './features/user/user-routes.js'
 
 const app = express()
 const PORT = process.env.PORT

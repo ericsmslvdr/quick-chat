@@ -6,4 +6,4 @@ const router = express.Router()
 router.post('/', createUser)
 router.delete('/:id', deleteUser)
 
-export { router }
+export default router
