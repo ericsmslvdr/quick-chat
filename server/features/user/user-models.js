@@ -2,8 +2,7 @@ import { Schema, model } from 'mongoose'
 
 const userSchema = Schema({
     name: {
-        type: String,
-        required: true
+        type: String
     }
 }, {
     timestamps: true
