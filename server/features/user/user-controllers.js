@@ -2,7 +2,9 @@ import { User } from "./user-models.js"
 
 export const createUser = async (req, res) => {
     try {
-        const user = await User.create(req.body)
+        // Create an anonymous credential
+        const credentials = Realm.Credentials.anonymous();
+        const user = await app.logIn(credentials);
         res.status(200).json(user)
     } catch (error) {
         res.status(400).json({ message: error.message })
