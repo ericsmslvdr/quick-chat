@@ -1,9 +1,16 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { ChatRoom } from "./components/chat-room/ChatRoom"
+import { Home } from "./components/home/Home"
+
 function App() {
 
   return (
-    <div>
-      <h1>TaraChat</h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/chat' element={<ChatRoom />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
