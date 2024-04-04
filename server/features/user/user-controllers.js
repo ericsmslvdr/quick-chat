@@ -2,10 +2,10 @@ import { User } from "./user-models.js"
 
 export const createUser = async (req, res) => {
     try {
-        const user = User.create(req.body)
-        res.status(200).json(user)
+        const user = await User.create(req.body)
+        res.send(user)
     } catch (error) {
-        res.status(400).json({ message: error.message })
+        res.status(400).send({ message: error.message })
     }
 }
 
@@ -14,10 +14,10 @@ export const deleteUser = async (req, res) => {
         const { id } = req.params
         const user = await User.findByIdAndDelete(id)
         if (!user) {
-            return res.status(404).json({ message: "User not found" })
+            return res.status(404).send({ message: "User not found" })
         }
-        res.status(200).json({ message: 'User deleted successfully' })
+        res.status(200).send({ message: 'User deleted successfully' })
     } catch (error) {
-        res.status(500).json({ message: error.message })
+        res.status(500).send({ message: error.message })
     }
 }
