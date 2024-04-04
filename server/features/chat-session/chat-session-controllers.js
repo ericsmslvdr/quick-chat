@@ -12,13 +12,13 @@ export const getChatSession = async (req, res) => {
 
 export const startChatSession = async (req, res) => {
     try {
-        const currentUser = req.user
+        const { user } = req.body
         const chatSession = await ChatSession.findOneAndUpdate(
-            { participants: { $all: [currentUser] } },
-            { $setOnInsert: { participants: [currentUser] } },
+            { participants: { $size: 1 } },
+            { $addToSet: { participants: user } },
             { upsert: true, new: true }
         )
-        res.status(200).json(chatSession)
+        res.status(200).send(chatSession)
     } catch (error) {
         res.status(500).json({ message: error.message })
     }
