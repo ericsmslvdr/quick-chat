@@ -1,10 +1,10 @@
 import { ChatSession } from "./chat-session-models.js"
 
-export const getChatSession = async (req, res) => {
+export const getChatList = async (req, res) => {
     try {
-        let id = { _id: "66091243d17db7b518003608" }
-        const chatSessions = await ChatSession.find(id);
-        res.status(200).json(chatSessions);
+        const { chatSessionId } = req.params
+        const chatList = await ChatSession.findById(chatSessionId, 'chats -_id');
+        res.status(200).send(chatList);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

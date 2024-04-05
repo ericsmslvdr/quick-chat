@@ -3,9 +3,11 @@ import { AnonymousForm } from '@components/forms/AnonymousForm'
 import { LoginForm } from '@components/forms/LoginForm'
 import { useAuth } from '@hooks/useAuth'
 import { useNavigate } from 'react-router-dom'
+import { useChat } from '@hooks/useChat'
 
 export const Home = () => {
     const { anonymousLogin } = useAuth()
+    const { startSession } = useChat()
     const navigate = useNavigate()
 
     const [formData, setFormData] = useState({
@@ -26,8 +28,9 @@ export const Home = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            await anonymousLogin(formData.userNameAnon || formData.userName)
-            navigate('/chat')
+            const userData = await anonymousLogin(formData.userNameAnon || formData.userName)
+            const sessionData = await startSession(userData._id)
+            // navigate('/chat')
         } catch (error) {
             console.log(error.message);
         }
