@@ -17,5 +17,5 @@ app.listen(PORT, () => {
 })
 
 app.use(express.json())
-app.use('/users', userRoutes)
-app.use('/chats', chatSessionRoutes)
+app.use('/api/users', userRoutes)
+app.use('/api/chats', chatSessionRoutes)

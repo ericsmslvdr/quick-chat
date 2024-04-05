@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
-import axiosInstance from '../config/axios'
+import axiosInstance from '../configs/axios'
 import { AnonymousForm } from '@components/forms/AnonymousForm'
 import { LoginForm } from '@components/forms/LoginForm'
 
 export const Home = () => {
-    const [user, setUser] = useState('')
     const [formData, setFormData] = useState({
         userName: '',
         userNameAnon: '',
@@ -23,8 +22,8 @@ export const Home = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const user = await axiosInstance.post('/users/auth', { name: formData.name })
-            const chat = await axiosInstance.post('/chats/start', { user: user.data._id })
+            const user = await axiosInstance.post('/api/users/auth', { name: formData.name })
+            const chat = await axiosInstance.post('/api/chats/start', { user: user.data._id })
             console.log("USER: ", user)
             console.log("CHAT: ", chat);
         } catch (error) {

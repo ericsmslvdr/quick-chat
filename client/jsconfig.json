@@ -14,9 +14,12 @@
             "@pages/*": [
                 "pages/*"
             ],
-            "@providers/*": [
-                "providers/*"
-            ]
+            "@contexts/*": [
+                "contexts/*"
+            ],
+            "@routes/*": [
+                "routes/*"
+            ],
         }
     },
     "exclude": [
