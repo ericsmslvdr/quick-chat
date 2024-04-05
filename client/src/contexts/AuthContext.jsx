@@ -1,3 +1,4 @@
+import { axiosInstance } from "@configs/axios";
 import { createContext, useState } from "react";
 
 export const AuthContext = createContext()
@@ -9,8 +10,7 @@ export const AuthProvider = ({ children }) => {
         try {
             const userRes = await axiosInstance.post('/api/users/auth', { name })
             await axiosInstance.post('/api/chats/start', { user: userRes.data._id })
-            setUser(res.data)
-            return res.data
+            setUser(userRes.data)
         } catch (error) {
             console.error("Error occurred during login:", error);
             throw error;

@@ -5,8 +5,8 @@
             "@components/*": [
                 "components/*"
             ],
-            "@config/*": [
-                "config/*"
+            "@configs/*": [
+                "configs/*"
             ],
             "@hooks/*": [
                 "hooks/*"
