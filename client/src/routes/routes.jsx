@@ -9,7 +9,7 @@ export const router = createBrowserRouter([
         element: <Home />,
     },
     {
-        path: '/chat',
+        path: '/chat/:chatSessionId',
         element:
             <AuthGuard>
                 <ChatRoom />

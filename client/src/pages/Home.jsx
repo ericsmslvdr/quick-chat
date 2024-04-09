@@ -30,7 +30,8 @@ export const Home = () => {
         try {
             const userData = await anonymousLogin(formData.userNameAnon || formData.userName)
             const sessionData = await startSession(userData._id)
-            // navigate('/chat')
+            const chatSessionId = sessionData.data._id
+            navigate(`/chat/${chatSessionId}`)
         } catch (error) {
             console.log(error.message);
         }

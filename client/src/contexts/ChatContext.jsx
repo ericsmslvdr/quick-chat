@@ -7,10 +7,17 @@ export const ChatProvider = ({ children }) => {
 
     const startSession = async (userId) => {
         const chatRes = await axiosInstance.post('/api/chats/start', { user: userId })
+        return chatRes
+    }
+
+    const getChatList = async (chatSessionId) => {
+        const chatList = await axiosInstance.get(`/api/chats/${chatSessionId}`)
+        return chatList
     }
 
     const contextValue = {
-        startSession
+        startSession,
+        getChatList
     }
 
     return (
