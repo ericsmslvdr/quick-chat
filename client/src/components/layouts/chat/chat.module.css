@@ -1,0 +1,13 @@
+.container {
+    padding: 50px;
+    height: 100dvh;
+}
+
+.wrapper {
+    max-width: 768px;
+    margin-inline: auto;
+    height: 100%;
+    display: flex;
+    gap: 20px;
+
+}
