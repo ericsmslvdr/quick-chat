@@ -1,11 +1,16 @@
 import style from './input.module.css';
 
-const Input = () => {
+type InputProps = {
+    placeholder: string;
+}
+
+const Input = ({ placeholder, ...rest }: InputProps) => {
     return (
         <input
             type="text"
-            placeholder="Type something nice..."
+            placeholder={placeholder}
             className={style.input}
+            {...rest}
         />
     )
 }

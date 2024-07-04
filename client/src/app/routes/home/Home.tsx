@@ -1,10 +1,11 @@
-import { HomeLayout } from "@components/layouts";
+import { ContentLayout } from "@components/layouts";
+import { HomeContent } from "@components/ui";
 
 const Home = () => {
     return (
-        <HomeLayout>
-            Welcome from home
-        </HomeLayout>
+        <ContentLayout>
+            <HomeContent />
+        </ContentLayout>
     )
 }
 

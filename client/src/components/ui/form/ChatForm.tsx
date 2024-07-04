@@ -6,8 +6,8 @@ const ChatForm = () => {
     return (
         <form action="">
             <div className={style["input-group"]}>
-                <Input />
-                <Button />
+                <Input placeholder='Type something nice...' />
+                <Button variant='squareWidth' />
             </div>
         </form>
     )

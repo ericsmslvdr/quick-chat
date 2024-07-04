@@ -1,12 +1,12 @@
-import { ChatLayout } from "@components/layouts";
+import { ContentLayout } from "@components/layouts";
 import { ChatContainer, ParticipantsInfoContainer } from "@components/ui";
 
 const Chat = () => {
     return (
-        <ChatLayout>
+        <ContentLayout>
             <ParticipantsInfoContainer />
             <ChatContainer />
-        </ChatLayout>
+        </ContentLayout>
     )
 }
 
