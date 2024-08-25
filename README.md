@@ -1,3 +1,3 @@
-# tarachat
+# Stranger Chat
 
 Chat random people🤩🥰😍

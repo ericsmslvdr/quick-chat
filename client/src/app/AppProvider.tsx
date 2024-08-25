@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 type AppProviderProps = {
     children: React.ReactNode;
@@ -6,9 +6,9 @@ type AppProviderProps = {
 
 const AppProvider = ({ children }: AppProviderProps) => {
     return (
-        <Fragment>
+        <>
             {children}
-        </Fragment>
+        </>
     )
 }
 
