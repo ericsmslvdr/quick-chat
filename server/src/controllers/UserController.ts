@@ -1,39 +1,41 @@
-import { Request, Response } from "express";
-import UserService from "../services/UserService";
+import { NextFunction, Request, RequestHandler, Response } from "express";
+import jwt from "jsonwebtoken";
+import UserModel from "../models/UserModel";
+import { IUser } from "../interfaces/IUser";
+
+const PRIVATE_KEY = process.env.PRIVATE_KEY || "";
 
 class UserController {
-    constructor(private userService: UserService) { }
 
-    async createUser(req: Request, res: Response) {
+    constructor(private readonly userModel: UserModel) { }
+
+    public createUser: RequestHandler<unknown, unknown, IUser, unknown> = async (req, res) => {
         try {
-            const userData = req.body;
-            const newUser = await this.userService.createUser(userData);
+            const { name, socket_id, is_matched } = req.body;
 
-            if (newUser instanceof Error) {
-                return res.status(400).json({ message: newUser.message });
-            }
+            const user = await this.userModel.create({ name, socket_id, is_matched });
 
-            return res.status(200).json({ data: newUser });
+            // add jwt
+            const token = jwt.sign(user, PRIVATE_KEY, { expiresIn: '1h' });
+
+            res.status(201).json({
+                user,
+                message: "User successfully created"
+            });
+
         } catch (error) {
-            console.error(`Error: ${error}`);
-            return res.status(500).json({ message: 'Internal server error' });
+            console.error(error);
         }
     }
 
-    async getUserById(req: Request, res: Response) {
-        const userId = req.params.id;
-        const user = await this.userService.getUserById(userId);
+    public async getAllUsers(req: Request, res: Response, next: NextFunction) {
+        try {
+            const users = await this.userModel.show();
 
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
+            res.status(201).json({ users });
+        } catch (error) {
+            console.error(error);
         }
-
-        return res.status(200).json({ data: user });
-    }
-
-    async getAllUsers(req: Request, res: Response) {
-        const users = await this.userService.getAllUsers();
-        return res.status(200).json({ data: users });
     }
 }
 

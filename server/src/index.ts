@@ -1,27 +1,31 @@
 import express from "express";
-import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import apiRouter from "./api";
-import connectToDatabase from "./database/connection";
-// import { errorHandler } from "./api/middlewares/error-handler";
+import "dotenv/config";
+import { createServer } from "node:http";
+import { Server } from "socket.io";
 
-dotenv.config();
+import apiRouter from "./routes";
+// import { errorHandler } from "./api/middlewares/error-handler";
 
 const PORT = process.env.PORT!;
 
-(async () => await connectToDatabase())();
-
 const app = express();
+const server = createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:5173"
+  }
+});
 
-// app.use(
-//   cors({
-//     // allowedHeaders: ["Content-Type"],
-//     // methods: ["GET", "POST", "PATCH", "DELETE"],
-//     // origin: [],
-//     // credentials: true,
-//   })
-// );
+app.use(
+  cors({
+    allowedHeaders: ["Content-Type"],
+    methods: ["GET", "POST", "PATCH", "DELETE"],
+    origin: ["http://localhost:5173"],
+    credentials: true,
+  })
+);
 
 // Middlewares
 app.use(cookieParser());
@@ -31,6 +35,13 @@ app.use(express.json());
 // Routes
 app.use("/api", apiRouter);
 
-app.listen(PORT, () => {
+io.on('connection', (socket) => {
+  console.log(`a user connected! ${socket.id}`);
+  socket.on('disconnect', () => {
+    console.log('a user disconnected!');
+  });
+});
+
+server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

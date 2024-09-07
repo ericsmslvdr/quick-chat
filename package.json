@@ -1,5 +1,5 @@
 {
-  "name": "strangerchat",
+  "name": "quick-chat",
   "version": "1.0.0",
   "description": "Chat random people🤩🥰😍",
   "main": "index.js",
@@ -9,5 +9,8 @@
     "client": "cd client && npm run dev"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "socket.io": "^4.7.5"
+  }
 }
