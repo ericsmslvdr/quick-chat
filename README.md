@@ -1,3 +1,3 @@
-# Stranger Chat
+# Quick Chat
 
 Chat random people🤩🥰😍
