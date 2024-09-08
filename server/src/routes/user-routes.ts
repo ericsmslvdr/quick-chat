@@ -1,13 +1,19 @@
 import { Router } from "express";
-import UserController from "../controllers/UserController";
-import UserModel from "../models/UserModel";
+import Database from "../database/database";
+import UserModel from "../database/models/user-model";
+import UserRepository from "../database/repositories/user-repository";
+import UserService from "../services/user-service";
+import UserController from "../controllers/user-controller";
 
 const userRouter = Router();
 
-const userModel = new UserModel();
-const userController = new UserController(userModel);
+const database = new Database();
+const userModel = new UserModel(database);
+const userRepository = new UserRepository(userModel);
+const userService = new UserService(userRepository);
+const userController = new UserController(userService);
 
-userRouter.post("/", (req, res, next) => userController.createUser(req, res, next));
-userRouter.get("/", (req, res, next) => userController.getAllUsers(req, res, next));
+userRouter.post("/", (req, res) => userController.createUser(req, res));
+userRouter.get("/", (req, res) => userController.getAllUsers(req, res));
 
 export default userRouter;
