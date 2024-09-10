@@ -13,7 +13,7 @@ const userRepository = new UserRepository(userModel);
 const userService = new UserService(userRepository);
 const userController = new UserController(userService);
 
-userRouter.post("/", (req, res) => userController.createUser(req, res));
-userRouter.get("/", (req, res) => userController.getAllUsers(req, res));
+userRouter.post("/", userController.createUser.bind(userController));
+userRouter.get("/", userController.getAllUsers.bind(userController));
 
 export default userRouter;
