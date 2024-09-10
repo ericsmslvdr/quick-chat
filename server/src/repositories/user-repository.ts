@@ -1,10 +1,14 @@
 import { ResultSetHeader, RowDataPacket } from 'mysql2/promise';
-import { CreateUserRequest, User } from '../../types/user-types';
+import { CreateUserRequest, User } from '../types/user-types';
+import UserRepositoryInterface from '../interfaces/user-repository-interface';
 import Database from '../database';
 
-class UserModel {
+export default class UserRepository implements UserRepositoryInterface {
+    private readonly db: Database;
 
-    constructor(private readonly db: Database) { }
+    constructor(db: Database) {
+        this.db = db;
+    }
 
     async create<T extends CreateUserRequest>(userData: T): Promise<User> {
         const { name, socket_id, is_matched } = userData;
@@ -47,14 +51,14 @@ class UserModel {
         }
     }
 
-
     async find(id: string): Promise<User | null> {
         const sql = "SELECT * FROM `users` WHERE `id` = ?";
+        const params = [id];
 
         const connection = await this.db.getConnection();
 
         try {
-            const [rows] = await connection.execute<RowDataPacket[]>(sql, [id]);
+            const [rows] = await connection.execute<RowDataPacket[]>(sql, params);
 
             if (rows.length <= 0) {
                 return null;
@@ -68,5 +72,3 @@ class UserModel {
         }
     }
 }
-
-export default UserModel;

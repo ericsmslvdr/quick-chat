@@ -1,11 +1,14 @@
 import { NextFunction, Request, RequestHandler, Response } from "express";
-import UserService from "../services/user-service";
+import UserServiceInterface from "../interfaces/user-service-interface";
 
-class UserController {
+export default class UserController {
+    private readonly userService: UserServiceInterface;
 
-    constructor(private readonly userService: UserService) { }
+    constructor(userService: UserServiceInterface) {
+        this.userService = userService;
+    }
 
-    async createUser(req: Request, res: Response) {
+    async createUser(req: Request, res: Response, next: NextFunction) {
         try {
             const { name, socket_id, is_matched } = req.body;
 
@@ -18,19 +21,17 @@ class UserController {
             });
 
         } catch (error) {
-            console.error(error);
+            next(error);
         }
     }
 
-    async getAllUsers(req: Request, res: Response) {
+    async getAllUsers(req: Request, res: Response, next: NextFunction) {
         try {
             const users = await this.userService.getAllUsers();
 
             res.status(201).json({ users });
         } catch (error) {
-            console.error(error);
+            next(error);
         }
     }
 }
-
-export default UserController;

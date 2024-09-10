@@ -1,26 +1,25 @@
-import jwt from 'jsonwebtoken';
-import UserRepository from "../database/repositories/user-repository";
 import { CreateUserRequest, CreateUserResponse, User } from "../types/user-types";
+import UserServiceInterface from '../interfaces/user-service-interface';
+import UserRepositoryInterface from '../interfaces/user-repository-interface';
+import { generateToken } from '../lib/jwt';
 
-const PRIVATE_KEY = process.env.PRIVATE_KEY || "";
+export default class UserService implements UserServiceInterface {
+    private readonly userRepository: UserRepositoryInterface;
 
-export default class UserService {
-
-    constructor(private readonly userRepository: UserRepository) { }
+    constructor(userRepository: UserRepositoryInterface) {
+        this.userRepository = userRepository;
+    }
 
     async createUser(userData: CreateUserRequest): Promise<CreateUserResponse> {
-        const user = await this.userRepository.createUser(userData);
+        const user = await this.userRepository.create(userData);
 
-        // add jwt
-        const token = jwt.sign(user, PRIVATE_KEY, {
-            expiresIn: '1h',
-        });
+        const token = generateToken(user);
 
         return { ...user, token };
     }
 
     async getAllUsers(): Promise<User[]> {
-        const users = this.userRepository.getAllUsers();
+        const users = this.userRepository.show();
 
         return users;
     }

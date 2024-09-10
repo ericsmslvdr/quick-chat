@@ -1,7 +1,7 @@
 import { createPool, Pool, PoolConnection } from 'mysql2/promise';
-import config from '../config/config';
+import config from './config';
 
-class Database {
+export default class Database {
     private pool: Pool;
 
     constructor() {
@@ -13,5 +13,3 @@ class Database {
     }
 
 }
-
-export default Database;    
