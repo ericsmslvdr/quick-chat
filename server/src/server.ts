@@ -1,6 +1,6 @@
 import { createServer } from "node:http";
 import { Server } from "socket.io";
-import app from "./app";
+import app from "./presentation/app";
 
 const PORT = process.env.PORT!;
 
