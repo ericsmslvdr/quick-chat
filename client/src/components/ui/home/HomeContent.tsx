@@ -1,7 +1,7 @@
 import style from './home.module.css';
 import CreateProfileForm from '../form/CreateProfileForm';
 
-const HomeDescription = () => {
+function HomeDescription() {
     return (
         <div className={style["home-container"]}>
             <h1>Quick Chat</h1>

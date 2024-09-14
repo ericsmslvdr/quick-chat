@@ -1,6 +1,6 @@
 import Card from "../card/Card"
 
-const OtherUserBox = () => {
+function OtherUserBox() {
     return (
         <Card>
             <div>Other user</div>

@@ -1,7 +1,7 @@
 import { ContentLayout } from "@components/layouts";
 import { HomeContent } from "@components/ui";
 
-const Home = () => {
+function Home() {
     return (
         <ContentLayout>
             <HomeContent />

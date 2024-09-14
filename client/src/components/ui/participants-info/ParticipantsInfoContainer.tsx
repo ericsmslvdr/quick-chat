@@ -3,7 +3,7 @@ import CurrentUserBox from './CurrentUserBox';
 import OtherUserBox from './OtherUserBox';
 import style from './participants.module.css';
 
-const ParticipantsInfoContainer = () => {
+function ParticipantsInfoContainer() {
     return (
         <Card className={style["participants-card"]}>
             <CurrentUserBox />

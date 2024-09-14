@@ -1,7 +1,7 @@
 import style from './participants.module.css';
 import Card from "../card/Card"
 
-const CurrentUserBox = () => {
+function CurrentUserBox() {
     return (
         <Card>
             <div className={style["card__name"]}>Current user</div>

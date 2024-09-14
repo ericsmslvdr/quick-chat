@@ -2,7 +2,7 @@ import { ContentLayout } from "@components/layouts";
 import { ChatContainer, ParticipantsInfoContainer } from "@components/ui";
 import { io } from "socket.io-client";
 
-const Chat = () => {
+function Chat() {
     const socket = io("http://localhost:3000");
     // const socket = io("https://server-domain.com");
 

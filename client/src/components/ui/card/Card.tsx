@@ -6,7 +6,7 @@ type CardProps = {
     className?: string;
 }
 
-const Card = ({ children, className }: CardProps) => {
+function Card({ children, className }: CardProps) {
     return (
         <div className={`${style.card} ${className}`}>
             {children}

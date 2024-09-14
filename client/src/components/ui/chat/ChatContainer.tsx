@@ -3,7 +3,7 @@ import Card from '../card/Card';
 import ChatForm from '../form/ChatForm';
 import ChatBubble from './ChatBubble';
 
-const ChatContainer = () => {
+function ChatContainer() {
     return (
         <Card className={style["chat-container"]}>
             <div className={style.chats}>

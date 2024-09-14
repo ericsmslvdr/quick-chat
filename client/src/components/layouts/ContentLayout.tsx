@@ -4,7 +4,7 @@ type ContentLayout = {
     children: React.ReactNode;
 }
 
-const ContentLayout = ({ children }: ContentLayout) => {
+function ContentLayout({ children }: ContentLayout) {
     return (
         <div className={style.container}>
             <div className={style.wrapper}>

@@ -6,7 +6,7 @@ type ButtonProps = {
     children?: string;
 }
 
-const Button = ({ variant, children, ...rest }: ButtonProps) => {
+function Button({ variant, children, ...rest }: ButtonProps) {
     let variantClass = '';
 
     switch (variant) {

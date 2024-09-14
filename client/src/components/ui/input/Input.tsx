@@ -4,7 +4,7 @@ type InputProps = {
     placeholder: string;
 }
 
-const Input = ({ placeholder, ...rest }: InputProps) => {
+function Input({ placeholder, ...rest }: InputProps) {
     return (
         <input
             type="text"

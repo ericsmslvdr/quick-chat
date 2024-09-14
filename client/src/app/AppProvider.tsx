@@ -4,7 +4,7 @@ type AppProviderProps = {
     children: React.ReactNode;
 }
 
-const AppProvider = ({ children }: AppProviderProps) => {
+function AppProvider({ children }: AppProviderProps) {
     return (
         <>
             {children}

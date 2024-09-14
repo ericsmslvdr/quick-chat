@@ -2,7 +2,7 @@ import style from './form.module.css';
 import Input from '../input/Input'
 import Button from '../button/Button'
 
-const ChatForm = () => {
+function ChatForm() {
     return (
         <form action="">
             <div className={style["input-group"]}>

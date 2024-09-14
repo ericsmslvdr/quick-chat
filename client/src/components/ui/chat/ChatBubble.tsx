@@ -1,6 +1,6 @@
 import style from './chat.module.css';
 
-const ChatBubble = ({ isUserAuth }: { isUserAuth: boolean }) => {
+function ChatBubble({ isUserAuth }: { isUserAuth: boolean }) {
   return (
     <div className={`
     ${style["chats__chat-bubble"]}
