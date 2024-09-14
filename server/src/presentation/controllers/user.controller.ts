@@ -23,7 +23,7 @@ export class UserController {
             res.status(201).json({
                 message: "User created successfully!",
                 data: user
-            })
+            });
         } catch (error) {
             console.error(`ERROR FROM CREATE USER CONTROLLER: ${error}`);
         }
@@ -39,10 +39,10 @@ export class UserController {
             res.status(200).json({
                 message: "User found successfully!",
                 data: result
-            })
+            });
 
         } catch (error) {
-            console.error(`ERROR FROM FIND USER CONTROLLER: ${error}`)
+            console.error(`ERROR FROM FIND USER CONTROLLER: ${error}`);
         }
     }
 
@@ -54,7 +54,7 @@ export class UserController {
 
             res.status(200).json({
                 message: "User deleted successfully!"
-            })
+            });
         } catch (error) {
             console.error(`ERROR FROM DELETE USER CONTROLLER ${error}`);
         }

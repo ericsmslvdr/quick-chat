@@ -7,7 +7,17 @@ export class MySQLUserRepository implements IUserRepository {
 
     constructor(private readonly databaseService: MySQLDatabaseService) { }
 
-    // Create a new user and return the newly created user record
+    /**
+     * INSERT, UPDATE, DELETE uses ResultSetHeader
+     * SELECT uses RowDataPacket[]
+     */
+
+    /**
+     * 
+     * @param name : string
+     * @param socketId : string
+     * @returns User
+     */
     async create(name: string, socketId: string): Promise<User> {
         const sql = "INSERT INTO users (`name`, `socket_id`) VALUES (?, ?)";
         const params = [name, socketId];
@@ -25,7 +35,11 @@ export class MySQLUserRepository implements IUserRepository {
         }
     }
 
-    // Find a user using id
+    /**
+     * 
+     * @param userId : number
+     * @returns User
+     */
     async find(userId: number): Promise<User> {
         const sql = "SELECT * FROM `users` WHERE `id` = ?";
         const params = [userId];
@@ -44,6 +58,10 @@ export class MySQLUserRepository implements IUserRepository {
         }
     }
 
+    /**
+     * 
+     * @param userId : number
+     */
     async delete(userId: number): Promise<void> {
         const sql = "DELETE FROM `users` WHERE `id` = ?";
         const params = [userId];
