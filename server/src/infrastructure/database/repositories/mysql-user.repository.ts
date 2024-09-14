@@ -27,9 +27,9 @@ export class MySQLUserRepository implements IUserRepository {
         try {
             const [result] = await connection.execute<ResultSetHeader>(sql, params);
             const id = result.insertId;
-            return await this.find(id);
-        } catch (error) {
-            throw new Error('User creation faile :(');
+            const newUser = await this.find(id);
+
+            return newUser!;
         } finally {
             connection.release();
         }
@@ -40,7 +40,7 @@ export class MySQLUserRepository implements IUserRepository {
      * @param userId : number
      * @returns User
      */
-    async find(userId: number): Promise<User> {
+    async find(userId: number): Promise<User | null> {
         const sql = "SELECT * FROM `users` WHERE `id` = ?";
         const params = [userId];
 
@@ -50,9 +50,11 @@ export class MySQLUserRepository implements IUserRepository {
             const [rows] = await connection.execute<RowDataPacket[]>(sql, params);
             const user = rows[0];
 
+            if (!user) {
+                return null;
+            }
+
             return new User(user.id, user.name, user.socket_id, user.created_at);
-        } catch (error) {
-            throw new Error(`Error finding a user with id of ${userId}`);
         } finally {
             connection.release();
         }
@@ -62,7 +64,7 @@ export class MySQLUserRepository implements IUserRepository {
      * 
      * @param userId : number
      */
-    async delete(userId: number): Promise<void> {
+    async delete(userId: number): Promise<boolean> {
         const sql = "DELETE FROM `users` WHERE `id` = ?";
         const params = [userId];
 
@@ -70,10 +72,12 @@ export class MySQLUserRepository implements IUserRepository {
 
         try {
             const [result] = await connection.execute<ResultSetHeader>(sql, params);
-            console.log(`THIS IS DELETE RES: ${JSON.stringify(result)}`);
 
-        } catch (error) {
-            throw new Error(`Error deleting user with id of ${userId}`);
+            if (!result.affectedRows) {
+                return false;
+            }
+
+            return true;
         } finally {
             connection.release();
         }

@@ -1,14 +1,21 @@
-// import { NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
 
-// interface CustomError extends Error {
-//     status?: number
-// }
+export class AppError extends Error {
+    status: number;
 
-// export function errorHandler(error: CustomError, req: Request, res: Response, next: NextFunction): void {
-//     console.error(error.message);
+    constructor(message: string, status: number) {
+        super(message);
+        this.status = status;
+    }
+}
 
-//     res.status(error.status || 500).json({
-//         message: error.message || "Internal Server Error",
-//         status: error.status || 500
-//     });
-// }
+export function errorHandler(error: AppError, req: Request, res: Response, next: NextFunction): void {
+    const statusCode = error.status || 500;
+    const message = error.message || "Internal Server Error";
+
+    res.status(statusCode).json({
+        message: message,
+        status: statusCode,
+        success: false
+    });
+}

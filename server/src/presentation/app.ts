@@ -3,7 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import "dotenv/config";
 import apiRouter from "./routes/api.routes";
-// import { errorHandler } from "./middlewares/error-handler";
+import { errorHandler } from "./middlewares/error-handler";
 
 const app: Application = express();
 
@@ -26,7 +26,7 @@ app.use(cookieParser());
 // Routes
 app.use("/api", apiRouter);
 
-//Global error handling
-// app.use(errorHandler);
+//Global error handler
+app.use(errorHandler);
 
 export default app;

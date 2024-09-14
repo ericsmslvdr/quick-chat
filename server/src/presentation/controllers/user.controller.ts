@@ -1,9 +1,10 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { CreateUserUseCase } from "../../application/use-cases/user/create-user.use-case";
 import { GetUserUseCase } from "../../application/use-cases/user/get-user.use-case";
 import { CreateUserDTO } from "../../application/dtos/user/create-user.dto";
 import { UserByIdDTO } from "../../application/dtos/user/user-by-id.dto";
 import { DeleteUserUseCase } from "../../application/use-cases/user/delete-user.use-case";
+import { AppError } from "../middlewares/error-handler";
 
 export class UserController {
 
@@ -14,49 +15,61 @@ export class UserController {
     ) { }
 
     // POST /api/users/
-    async createUser(req: Request, res: Response): Promise<void> {
+    async createUser(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
-            const { name, socket_id } = req.body;
-            const createUserDto = new CreateUserDTO(name, socket_id);
-            const user = await this.createUserUseCase.execute(createUserDto);
+            const { name, socketId } = req.body;
+
+            if (!name || !socketId) {
+                throw new AppError("Name and socket id fields are required!", 400);
+            }
+
+            const createUserDto = new CreateUserDTO(name, socketId);
+            const result = await this.createUserUseCase.execute(createUserDto);
 
             res.status(201).json({
                 message: "User created successfully!",
-                data: user
+                data: result
             });
         } catch (error) {
-            console.error(`ERROR FROM CREATE USER CONTROLLER: ${error}`);
+            next(error);
         }
     }
 
     // POST /api/users/123
-    async findUser(req: Request, res: Response): Promise<void> {
+    async findUser(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const { id } = req.params;
             const findUserDto = new UserByIdDTO(id);
             const result = await this.getUserUseCase.execute(findUserDto);
 
+            if (!result) {
+                throw new AppError(`User with id: ${id} does not exist`, 404);
+            }
+
             res.status(200).json({
                 message: "User found successfully!",
                 data: result
             });
-
         } catch (error) {
-            console.error(`ERROR FROM FIND USER CONTROLLER: ${error}`);
+            next(error);
         }
     }
 
-    async deleteUser(req: Request, res: Response): Promise<void> {
+    async deleteUser(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const { id } = req.params;
             const deleteUserDto = new UserByIdDTO(id);
-            await this.deleteUserUserCase.execute(deleteUserDto);
+            const result = await this.deleteUserUserCase.execute(deleteUserDto);
+
+            if (!result) {
+                throw new AppError(`Cannot delete a user that doesn't exist.`, 404);
+            }
 
             res.status(200).json({
                 message: "User deleted successfully!"
             });
         } catch (error) {
-            console.error(`ERROR FROM DELETE USER CONTROLLER ${error}`);
+            next(error);
         }
     }
 }
