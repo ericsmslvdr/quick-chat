@@ -24,7 +24,8 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": "./src",
     "paths": {
-      "@components/*": ["components/*"]
+      "@components/*": ["shared/components/*"],
+      "@features/*": ["features/*"]
     }
 
   },

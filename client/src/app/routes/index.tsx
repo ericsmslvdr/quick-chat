@@ -1,16 +1,16 @@
 import { createBrowserRouter } from "react-router-dom";
-import Chat from "./chat/Chat";
-import Home from "./home/Home";
+import HomeRoute from "./home/home";
+import ConversationRoute from "./conversation/conversation";
 
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <Home />
+        element: <HomeRoute />
     },
     {
-        path: '/chat',
-        element: <Chat />
+        path: '/conversation',
+        element: <ConversationRoute />
     }
-])
+]);
 
 export default router;

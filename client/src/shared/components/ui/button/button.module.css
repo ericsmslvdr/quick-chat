@@ -1,0 +1,27 @@
+.button {
+    border: none;
+    height: 42px;
+    background-color: rgb(36, 36, 36);
+    border-radius: 8px;
+    cursor: pointer;
+    color: white;
+}
+
+.button:focus {
+    outline: 2px solid rgba(0, 0, 0, 0.6);
+}
+
+.send-icon {
+    width: 22px;
+    height: 22px;
+    color: white;
+    margin: auto;
+}
+
+.button--full {
+    width: 100%;
+}
+
+.button--square {
+    width: 42px;
+}

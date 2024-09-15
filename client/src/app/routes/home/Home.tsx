@@ -1,12 +1,18 @@
 import { ContentLayout } from "@components/layouts";
-import { HomeContent } from "@components/ui";
+import CreateUserForm from "@features/auth/components/create-user-form";
 
-function Home() {
+function HomeRoute() {
     return (
         <ContentLayout>
-            <HomeContent />
+            <div className="m-auto">
+                <h1 className="text-4xl font-bold">Quick Chat</h1>
+                <hr className="my-2" />
+                <p>Welcome to Quick Chat! <br />Please enter your information to get started.</p>
+                <br />
+                <CreateUserForm />
+            </div>
         </ContentLayout>
-    )
+    );
 }
 
-export default Home;
+export default HomeRoute;
