@@ -10,13 +10,13 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 function Button({ variant, children, className, ...rest }: ButtonProps): JSX.Element {
     const variantClass = clsx({
         'w-full': variant === 'fullWidth',
-        'w-[52px]': variant === 'squareWidth',
+        'w-[42px]': variant === 'squareWidth',
     });
 
     return (
         <button
             className={twMerge(
-                "p-2 border-none h-[42px] bg-gray-900 rounded-lg cursor-pointer text-white shadow-lg",
+                "grow-0 shrink-0 border-none h-[42px] bg-gray-900 rounded-lg cursor-pointer text-white shadow-lg",
                 "focus:outline focus:outline-2 focus:outline-black focus:outline-opacity-60",
                 "hover:bg-gray-700 ease-out duration-300 transition-all",
                 variantClass,
