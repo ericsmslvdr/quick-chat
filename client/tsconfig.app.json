@@ -24,8 +24,13 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": "./src",
     "paths": {
-      "@components/*": ["shared/components/*"],
-      "@features/*": ["features/*"]
+      "@components/*": ["components/*"],
+      "@pages/*": ["pages/*"],
+      "@libs/*": ["libs/*"],
+      "@hooks/*": ["hooks/*"],
+      "@contexts/*": ["contexts/*"],
+      "@assets/*": ["assets/*"],
+      "@containers/*": ["containers/*"]
     }
 
   },

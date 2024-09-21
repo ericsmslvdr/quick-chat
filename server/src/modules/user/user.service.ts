@@ -1,19 +1,19 @@
-import { CreateUserDTO, UserByIdDTO } from "../../shared/dtos/user.dto";
 import { User } from "./user.entity";
-import { IUserRepository } from "./user.irepository";
-import { IUserService } from "./user.iservice";
 
-export class UserService implements IUserService {
+export class UserService {
+    private users: User[] = [];
 
-    constructor(private readonly userRepository: IUserRepository) { }
-
-    createUser(input: CreateUserDTO): Promise<User> {
-        return this.userRepository.create(input.name, input.socketId);
+    create(id: string, name: string): User {
+        const user = new User(id, name);
+        this.users.push(user);
+        return user;
     }
-    findById(input: UserByIdDTO): Promise<User | null> {
-        return this.userRepository.find(parseInt(input.id));
+
+    find(id: string): User | undefined {
+        return this.users.find(u => u.getUserId() === id);
     }
-    deleteById(input: UserByIdDTO): Promise<boolean> {
-        return this.userRepository.delete(parseInt(input.id));
+
+    remove(id: string): void {
+        this.users = this.users.filter(u => u.getUserId() !== id);
     }
 }

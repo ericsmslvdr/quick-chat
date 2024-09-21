@@ -2,9 +2,15 @@
 export class User {
 
     constructor(
-        public id: number,
-        public name: string,
-        public socket_id: string,
-        public created_at: Date
+        private id: string,
+        private name: string
     ) { }
+
+    getUserId(): string {
+        return this.id;
+    }
+
+    getUserName(): string {
+        return this.name;
+    }
 }

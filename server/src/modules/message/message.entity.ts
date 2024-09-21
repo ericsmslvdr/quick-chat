@@ -1,11 +1,10 @@
+import { User } from "../user/user.entity";
 
 export class Message {
 
     constructor(
-        public id: string,
-        public conversationId: string,
-        public userId: string,
+        public sender: User,
         public content: string,
-        public sentAt: Date
+        public sendAt: Date
     ) { }
 }
