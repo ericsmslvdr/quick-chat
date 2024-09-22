@@ -4,7 +4,7 @@ import { Button } from '../button';
 import { useChat } from '@hooks/useChat';
 
 export function MessageForm() {
-    const { status, leaveChat, isOtherUserDisconnected, otherUser } = useChat();
+    const { status, leaveChat, startChat, isOtherUserDisconnected, otherUser, user } = useChat();
 
     const [message, setMessage] = useState('');
 
@@ -18,7 +18,14 @@ export function MessageForm() {
     }
 
     function handleNextPerson() {
-        console.log('next person clicked!');
+        const currentUserName = user?.name;
+
+        if (!currentUserName) {
+            return;
+        }
+        
+        leaveChat();
+        startChat(currentUserName);
     }
 
     function handleOnSubmit(e: FormEvent<HTMLFormElement>) {

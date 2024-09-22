@@ -1,7 +1,7 @@
-import { createContext, Dispatch, ReactNode, SetStateAction, useEffect, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
 
-type Status = 'waiting' | 'found' | 'preparing' | 'started' | 'disconnected';
+type Status = 'waiting' | 'found' | 'preparing' | 'started' | 'disconnected' | null;
 
 type ChatContextType = {
     user: CurrentUser | undefined;
@@ -38,7 +38,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
     function leaveChat() {
         socket?.emit("leaveChat");
         setMessage("You have left the chat");
-        // setStatus(null);
+        setStatus(null);
     }
 
     function startChat(name: string) {
