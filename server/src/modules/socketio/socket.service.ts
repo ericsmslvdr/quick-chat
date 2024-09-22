@@ -1,13 +1,15 @@
 import { Server, Socket } from "socket.io";
 import { ChatController } from "../chat/chat.controller";
 import { UserController } from "../user/user.controller";
+import { MessageController } from "../message/message.controller";
 
 export class SocketService {
     private io!: Server;
 
     constructor(
         private readonly userController: UserController,
-        private readonly chatController: ChatController
+        private readonly chatController: ChatController,
+        private readonly messageController: MessageController
     ) { }
 
     initialize(server: any): void {
@@ -76,6 +78,32 @@ export class SocketService {
                         console.log(`CHAT STARTED...`);
                     }, 2000);
                 }
+            });
+
+            socket.on("sendMessage", (data) => {
+                const user = this.userController.findById(data.senderId);
+
+                if (!user) {
+                    return;
+                }
+
+                const chat = this.chatController.findChatByUser(user);
+
+                if (!chat) {
+                    return;
+                }
+
+                const message = this.messageController.sendMessage(data.senderId, data.content);
+
+                chat.addMessage(message);
+
+                this.io.to(chat.getChatId()).emit("messageReceived", {
+                    senderId: user.getUserId(),
+                    content: message.getContent(),
+                    sentAt: message.getSendAt()
+                });
+
+                console.log(`Message sent from ${user.getUserName()}: ${data.content}`);
             });
 
             socket.on("disconnect", () => {

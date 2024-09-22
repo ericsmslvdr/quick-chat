@@ -4,7 +4,7 @@ import { Button } from '../button';
 import { useChat } from '@hooks/useChat';
 
 export function MessageForm() {
-    const { status, leaveChat, startChat, isOtherUserDisconnected, otherUser, user } = useChat();
+    const { status, leaveChat, startChat, isOtherUserDisconnected, otherUser, user, sendMessage } = useChat();
 
     const [message, setMessage] = useState('');
 
@@ -23,14 +23,21 @@ export function MessageForm() {
         if (!currentUserName) {
             return;
         }
-        
+
         leaveChat();
         startChat(currentUserName);
     }
 
     function handleOnSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
+        if (message.trim() === "") {
+            console.log("Message cannot be empty");
+            return;
+        }
+
+        sendMessage(message);
         console.log('message sent!');
+        setMessage("");
     }
 
     console.log(message);

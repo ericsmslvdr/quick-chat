@@ -13,7 +13,15 @@ export function CreateUserForm(): JSX.Element {
 
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        startChat(name);
+        const trimmedName = name.trim();
+
+        if (trimmedName === "") {
+            console.log("Name cannot be empty");
+            setName("");
+            return;
+        }
+
+        startChat(trimmedName);
     }
 
     return (
@@ -25,6 +33,7 @@ export function CreateUserForm(): JSX.Element {
                     name='name'
                     onChange={handleOnChange}
                     value={name}
+                    required
                     placeholder='Enter your preferred name...'
                 />
             </div>

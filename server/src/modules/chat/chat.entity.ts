@@ -40,6 +40,10 @@ export class Chat {
         return message;
     }
 
+    getMessages(): Message[] {
+        return this.messages;
+    }
+
     hasUser(user: User): boolean {
         return this.users.some(u => u.getUserId() === user.getUserId());
     }

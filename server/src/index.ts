@@ -6,6 +6,8 @@ import { UserController } from "./modules/user/user.controller";
 import { ChatController } from "./modules/chat/chat.controller";
 import { ChatService } from "./modules/chat/chat.service";
 import { UserService } from "./modules/user/user.service";
+import { MessageController } from "./modules/message/message.controller";
+import { MessageService } from "./modules/message/message.service";
 
 const app = express();
 const server = createServer(app);
@@ -16,7 +18,10 @@ const userController = new UserController(userService);
 const chatService = new ChatService();
 const chatController = new ChatController(chatService);
 
-const socketService = new SocketService(userController, chatController);
+const messageService = new MessageService();
+const messageController = new MessageController(messageService);
+
+const socketService = new SocketService(userController, chatController, messageController);
 socketService.initialize(server);
 
 app.get("/api/chats", (req, res) => {
