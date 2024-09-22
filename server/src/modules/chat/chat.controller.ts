@@ -1,3 +1,4 @@
+import { Response } from "express";
 import { Message } from "../message/message.entity";
 import { User } from "../user/user.entity";
 import { Chat } from "./chat.entity";
@@ -22,6 +23,10 @@ export class ChatController {
         this.chatService.end(chat, user);
     }
 
+    removeChat(chat: Chat): void {
+        this.chatService.remove(chat);
+    }
+
     sendMessage(message: Message, chat: Chat): Message | undefined {
         return this.chatService.addMessage(message, chat);
     }
@@ -30,4 +35,18 @@ export class ChatController {
         return this.chatService.findByUser(user);
     }
 
+    getAllChats(res: Response): Chat[] {
+        res.json(this.chatService.list());
+        return this.chatService.list();
+    }
+
+    getOtherUser(user: User): User | undefined {
+        const chat = this.findChatByUser(user);
+
+        if (!chat) {
+            return undefined;
+        }
+
+        return this.chatService.getOtherUser(chat, user);
+    }
 }

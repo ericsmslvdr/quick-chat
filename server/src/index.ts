@@ -19,6 +19,16 @@ const chatController = new ChatController(chatService);
 const socketService = new SocketService(userController, chatController);
 socketService.initialize(server);
 
+app.get("/api/chats", (req, res) => {
+    const chats = chatController.getAllChats(res);
+    return res.json(chats);
+});
+
+app.get("/api/users", (req, res) => {
+    const users = userController.getAllUsers(res);
+    return res.json(users);
+});
+
 server.listen(3000, () => {
     console.log("Server running in port 3000");
 });

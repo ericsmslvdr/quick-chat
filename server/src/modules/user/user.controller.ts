@@ -1,3 +1,4 @@
+import { Response } from "express";
 import { User } from "./user.entity";
 import { UserService } from "./user.service";
 
@@ -15,5 +16,10 @@ export class UserController {
 
     findById(id: string): User | undefined {
         return this.userService.find(id);
+    }
+
+    getAllUsers(res: Response): User[] {
+        res.json(this.userService.list());
+        return this.userService.list();
     }
 }

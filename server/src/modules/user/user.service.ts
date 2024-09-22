@@ -16,4 +16,8 @@ export class UserService {
     remove(id: string): void {
         this.users = this.users.filter(u => u.getUserId() !== id);
     }
+
+    list(): User[] {
+        return this.users;
+    }
 }

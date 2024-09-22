@@ -4,7 +4,7 @@ import { Button } from '../button';
 import { useChat } from '@hooks/useChat';
 
 export function MessageForm() {
-    const { } = useChat();
+    const { status, leaveChat, isOtherUserDisconnected, otherUser } = useChat();
 
     const [message, setMessage] = useState('');
 
@@ -13,7 +13,8 @@ export function MessageForm() {
     }
 
     function handleEndChat() {
-        // navigate('/');
+        leaveChat();
+        window.location.href = '/';
     }
 
     function handleNextPerson() {
@@ -27,20 +28,23 @@ export function MessageForm() {
 
     console.log(message);
 
+    const buttonStyles = status === 'disconnected' ? 'fullWidth' : 'squareWidth';
+
     return (
         <form className='w-full' onSubmit={handleOnSubmit}>
             <div className="flex gap-2 w-full">
-                <Button variant='squareWidth' className='text-sm' onClick={handleEndChat} type='button'>End</Button>
-                <Button variant='squareWidth' className='text-sm' onClick={handleNextPerson} type='button'>Next</Button>
+                <Button variant={buttonStyles} className='text-sm' onClick={handleEndChat} type='button'>End</Button>
+                <Button variant={buttonStyles} className='text-sm' onClick={handleNextPerson} type='button'>Next</Button>
                 <Input
                     type='text'
                     name='message'
                     onChange={handleOnChange}
                     value={message}
-                    placeholder='Type something nice...'
-                    className="w-full"
+                    placeholder={isOtherUserDisconnected ? `${otherUser} has left the chat` : 'Type something nice...'}
+                    className={`${isOtherUserDisconnected ? 'border-red-500/60 placeholder-red-500/60' : ''} w-full`}
+                    disabled={isOtherUserDisconnected}
                 />
-                <Button variant='squareWidth' type='submit' >
+                <Button variant='squareWidth' type='submit' disabled={isOtherUserDisconnected} className={isOtherUserDisconnected ? 'cursor-not-allowed bg-red-500/60 hover:bg-red-500/60' : ''}>
                     <img
                         src="https://img.icons8.com/?size=100&id=85971&format=png&color=FFFFFF"
                         alt="Send icon"

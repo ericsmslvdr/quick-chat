@@ -1,18 +1,23 @@
 import { Card } from "@components/ui/card";
 import { MessageForm } from "@components/ui/form";
+import { useChat } from "@hooks/useChat";
 
 function OtherUserBox() {
+    const { otherUser } = useChat();
+
     return (
         <Card>
-            <p>Other user</p>
+            <p>{otherUser}</p>
         </Card>
     );
 }
 
 function CurrentUserBox() {
+    const { user } = useChat();
+
     return (
         <Card>
-            <p>Current user</p>
+            <p>{user?.name}</p>
         </Card>
     );
 }
@@ -58,12 +63,6 @@ function ChatContainer() {
 }
 
 export function Chat() {
-    // const { status, message } = useSocket();
-
-    // if (status !== "started") {
-    //     return <Waiting message={message} />;
-    // }
-
     return (
         <>
             <ParticipantsInfoContainer />

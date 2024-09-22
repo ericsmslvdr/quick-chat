@@ -4,7 +4,7 @@ import { Button } from "../button";
 import { useChat } from "@hooks/useChat";
 
 export function CreateUserForm(): JSX.Element {
-    const { newSocket, setUser } = useChat();
+    const { startChat } = useChat();
     const [name, setName] = useState<string>("");
 
     function handleOnChange(e: ChangeEvent<HTMLInputElement>) {
@@ -13,8 +13,7 @@ export function CreateUserForm(): JSX.Element {
 
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        newSocket?.emit("startChat", name);
-        setUser(name);
+        startChat(name);
     }
 
     return (

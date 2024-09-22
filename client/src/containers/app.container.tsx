@@ -5,15 +5,15 @@ import { Matching } from "@components/matching";
 import { useChat } from "@hooks/useChat";
 
 export function AppContainer() {
-    const { status, message, user } = useChat();
+    const { status, message } = useChat();
 
     function renderContent() {
 
-        if (status !== "started" && user) {
+        if (status === "waiting" || status === "found" || status === "preparing") {
             return <Matching message={message} />;
         }
 
-        if (status === "started") {
+        if (status === "started" || status === 'disconnected') {
             return <Chat />
         }
 

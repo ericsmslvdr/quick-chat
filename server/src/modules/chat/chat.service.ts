@@ -45,8 +45,21 @@ export class ChatService {
         foundChat.removeUser(user);
     }
 
+    remove(chat: Chat): void {
+        this.chats = this.chats.filter(c => c.getChatId() !== chat.getChatId());
+    }
+
     findByUser(user: User): Chat | undefined {
         return this.chats.find(c => c.hasUser(user));
     }
 
+    list(): Chat[] {
+        return this.chats;
+    }
+
+    getOtherUser(chat: Chat, user: User): User | undefined {
+        const users = chat.getUsers();
+        const otherUser = users.find(u => u.getUserId() !== user.getUserId());
+        return otherUser;
+    }
 }

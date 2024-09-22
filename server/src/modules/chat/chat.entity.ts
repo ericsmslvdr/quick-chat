@@ -11,28 +11,24 @@ export class Chat {
         private isActive: boolean = true
     ) { }
 
-    addUser(user: User): string {
+    addUser(user: User): void {
+        this.users.push(user);
+
         if (this.users.length === this.MAX_USERS) {
             this.isActive = false;
-            return "Oops, chat room is full!";
         }
-        this.users.push(user);
-        return `${user.getUserName()} joined the chat!`;
     }
 
     removeUser(user: User): void {
-        this.users = this.users.filter(u => u.getUserId() !== user.getUserId())
+        this.users = this.users.filter(u => u.getUserId() !== user.getUserId());
     }
 
     isAvailable(): boolean {
         return this.users.length < this.MAX_USERS && this.isActive;
     }
 
-    getAllUsers(): { [key: string]: unknown } {
-        return {
-            users: this.users.map(user => user.getUserName()),
-            length: this.users.length
-        }
+    getUsers(): User[] {
+        return this.users;
     }
 
     getChatId(): string {

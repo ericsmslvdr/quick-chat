@@ -23,6 +23,12 @@ export class SocketService {
             // Start Converastion
             socket.on("startChat", (name: string) => {
                 const user = this.userController.createUser(socket.id, name);
+
+                socket.emit("userCreate", {
+                    id: socket.id,
+                    name: name
+                });
+
                 console.log(`Chat started! ${socket.id} Name: ${name}`);
 
                 const chat = this.chatController.startChat(user);
@@ -31,24 +37,42 @@ export class SocketService {
                 socket.join(chatId);
 
                 if (chat.isAvailable()) {
-                    this.io.to(chatId).emit("waitingForUser", { message: "Waiting for another user . . ." });
+                    this.io.to(chatId).emit("waitingForUser", {
+                        message: "Waiting for another user . . ."
+                    });
+
                     console.log(`WAITING FOR ANOTHER USER`);
                 }
 
-                console.log(`User ${name} has joined the chat ${chatId}`);
-                console.log(`Chat is available: ${chat.isAvailable()}`);
-
                 if (!chat.isAvailable()) {
-                    this.io.to(chatId).emit("userHasFound", { message: "User has been found!" });
+                    const otherUser = this.chatController.getOtherUser(user);
+                    const otherUser2 = user;
+
+                    this.io.to(chatId).emit("userHasFound", {
+                        message: "User has been found!",
+                        otherUser: otherUser2.getUserName() /* Get the name of other user for the first user */
+                    });
+
+                    socket.emit("userHasFound", {
+                        message: "User has been found!",
+                        otherUser: otherUser?.getUserName() /* Get the name f other user for the second user */
+                    });
+
                     console.log(`USER HAS BEEN FOUND`);
 
                     setTimeout(() => {
-                        this.io.to(chatId).emit("preparing", { message: "Preparing . . ." });
+                        this.io.to(chatId).emit("preparing", {
+                            message: "Preparing . . ."
+                        });
+
                         console.log(`PREPARING...`);
                     }, 1000);
 
                     setTimeout(() => {
-                        this.io.to(chatId).emit("chatStarted", { chatId, message: "Chat started!" })
+                        this.io.to(chatId).emit("chatStarted", {
+                            chatId, message: "Chat started!"
+                        });
+
                         console.log(`CHAT STARTED...`);
                     }, 2000);
                 }
@@ -70,11 +94,44 @@ export class SocketService {
                         });
 
                         socket.leave(chat.getChatId());
-                    }
-                }
 
-                this.userController.disconnectUser(socket.id);
+                        if (chat.getUsers().length === 0) {
+                            console.log(`Conversation ${chat.getChatId()} is empty and will be removed.`);
+                            this.chatController.removeChat(chat);
+                        }
+                    }
+
+                    this.userController.disconnectUser(socket.id);
+                }
             });
+
+            socket.on("leaveChat", () => {
+                console.log(`User ${socket.id} has left the chat!`);
+
+                const user = this.userController.findById(socket.id);
+
+                if (user) {
+                    const chat = this.chatController.findChatByUser(user);
+
+                    if (chat) {
+                        this.chatController.endChat(chat, user);
+
+                        this.io.to(chat.getChatId()).emit("userHasDisconnected", {
+                            message: `${user.getUserName()} has left the chat.`,
+                            userId: user.getUserId()
+                        });
+
+                        if (chat.getUsers().length === 0) {
+                            console.log(`Conversation ${chat.getChatId()} is empty and will be removed.`);
+                            this.chatController.removeChat(chat);
+                        }
+
+                        socket.leave(chat.getChatId());
+                    }
+
+                    this.userController.disconnectUser(socket.id);
+                }
+            })
         });
     }
 }
