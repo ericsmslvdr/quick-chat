@@ -57,9 +57,15 @@ export class ChatService {
         return this.chats;
     }
 
-    getOtherUser(chat: Chat, user: User): User | undefined {
+    getOtherUser(user: User): User | undefined {
+        const chat = this.findByUser(user);
+
+        if (!chat) {
+            return undefined;
+        }
         const users = chat.getUsers();
         const otherUser = users.find(u => u.getUserId() !== user.getUserId());
+        
         return otherUser;
     }
 }

@@ -41,12 +41,6 @@ export class ChatController {
     }
 
     getOtherUser(user: User): User | undefined {
-        const chat = this.findChatByUser(user);
-
-        if (!chat) {
-            return undefined;
-        }
-
-        return this.chatService.getOtherUser(chat, user);
+        return this.chatService.getOtherUser(user);
     }
 }
