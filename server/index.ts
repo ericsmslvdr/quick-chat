@@ -1,13 +1,13 @@
 import "dotenv/config";
 import express from "express";
 import { createServer } from "node:http";
-import { SocketService } from "./modules/socketio/socket.service";
-import { UserController } from "./modules/user/user.controller";
-import { ChatController } from "./modules/chat/chat.controller";
-import { ChatService } from "./modules/chat/chat.service";
-import { UserService } from "./modules/user/user.service";
-import { MessageController } from "./modules/message/message.controller";
-import { MessageService } from "./modules/message/message.service";
+import { SocketService } from "./src/socketio/socket.service";
+import { UserController } from "./src/user/user.controller";
+import { ChatController } from "./src/chat/chat.controller";
+import { ChatService } from "./src/chat/chat.service";
+import { UserService } from "./src/user/user.service";
+import { MessageController } from "./src/message/message.controller";
+import { MessageService } from "./src/message/message.service";
 
 const app = express();
 const server = createServer(app);
