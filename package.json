@@ -1,9 +1,5 @@
 {
   "name": "quick-chat",
-  "workspaces": [
-    "client",
-    "server"
-  ],
   "version": "1.0.0",
   "description": "Chat random people🤩🥰😍",
   "main": "index.js",
