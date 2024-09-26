@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { Input } from '../input';
 import { Button } from '../button';
-import { useChat } from '@hooks/useChat';
+import { useChat } from '@providers/chat-provider';
 
 export function MessageForm() {
     const { status, leaveChat, startChat, isOtherUserDisconnected, otherUser, user, sendMessage } = useChat();
@@ -42,13 +42,11 @@ export function MessageForm() {
 
     console.log(message);
 
-    const buttonStyles = status === 'disconnected' ? 'fullWidth' : 'squareWidth';
-
     return (
         <form className='w-full' onSubmit={handleOnSubmit}>
             <div className="flex gap-2 w-full">
-                <Button variant={buttonStyles} className='text-sm' onClick={handleEndChat} type='button'>End</Button>
-                <Button variant={buttonStyles} className='text-sm' onClick={handleNextPerson} type='button'>Next</Button>
+                <Button variant="bordered" className='text-sm' onClick={handleEndChat} type='button'>End</Button>
+                <Button variant="squared" className='text-sm' onClick={handleNextPerson} type='button'>Next</Button>
                 <Input
                     type='text'
                     name='message'
@@ -58,7 +56,7 @@ export function MessageForm() {
                     className={`${isOtherUserDisconnected ? 'border-red-500/60 placeholder-red-500/60' : ''} w-full`}
                     disabled={isOtherUserDisconnected}
                 />
-                <Button variant='squareWidth' type='submit' disabled={isOtherUserDisconnected} className={isOtherUserDisconnected ? 'cursor-not-allowed bg-red-500/60 hover:bg-red-500/60' : ''}>
+                <Button variant={isOtherUserDisconnected ? "disabled" : "squared"} type='submit' disabled={isOtherUserDisconnected}>
                     <img
                         src="https://img.icons8.com/?size=100&id=85971&format=png&color=FFFFFF"
                         alt="Send icon"

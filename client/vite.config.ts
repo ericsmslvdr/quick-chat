@@ -9,8 +9,7 @@ export default defineConfig({
       '@components': '/src/components',
       '@pages': '/src/pages',
       '@libs': '/src/libs',
-      '@hooks': '/src/hooks',
-      '@contexts': '/src/contexts',
+      '@providers': '/src/providers',
       '@assets': '/src/assets',
       '@containers': '/src/containers'
     }

@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
 
 type Status = 'waiting' | 'found' | 'preparing' | 'started' | 'disconnected' | null;
@@ -144,4 +144,14 @@ export function ChatProvider({ children }: { children: ReactNode }) {
             {children}
         </ChatContext.Provider>
     );
+}
+
+export function useChat() {
+    const chat = useContext(ChatContext);
+
+    if (!chat) {
+        throw new Error("useChat must be used within a ChatProvider");
+    }
+
+    return chat;
 }

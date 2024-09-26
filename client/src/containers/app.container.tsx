@@ -2,7 +2,7 @@ import { Chat } from "@components/chat";
 import { Home } from "@components/home";
 import { ContentLayout } from "@components/layouts";
 import { Matching } from "@components/matching";
-import { useChat } from "@hooks/useChat";
+import { useChat } from "@providers/chat-provider";
 
 export function AppContainer() {
     const { status, message } = useChat();

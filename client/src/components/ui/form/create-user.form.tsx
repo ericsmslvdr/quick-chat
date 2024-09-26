@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from "react"
 import { Input } from "../input";
 import { Button } from "../button";
-import { useChat } from "@hooks/useChat";
+import { useChat } from "@providers/chat-provider";
 
 export function CreateUserForm(): JSX.Element {
     const { startChat } = useChat();
@@ -37,7 +37,7 @@ export function CreateUserForm(): JSX.Element {
                     placeholder='Enter your preferred name...'
                 />
             </div>
-            <Button variant='fullWidth'>Start</Button >
+            <Button>Start</Button >
         </form>
     );
 }

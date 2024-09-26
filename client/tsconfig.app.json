@@ -27,8 +27,7 @@
       "@components/*": ["components/*"],
       "@pages/*": ["pages/*"],
       "@libs/*": ["libs/*"],
-      "@hooks/*": ["hooks/*"],
-      "@contexts/*": ["contexts/*"],
+      "@providers/*": ["providers/*"],
       "@assets/*": ["assets/*"],
       "@containers/*": ["containers/*"]
     }

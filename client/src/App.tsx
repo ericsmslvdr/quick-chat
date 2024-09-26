@@ -1,5 +1,5 @@
 import { AppContainer } from "@containers/app.container";
-import { ChatProvider } from "@contexts/chat-provider";
+import { ChatProvider } from "@providers/chat-provider";
 
 function App() {
     return (

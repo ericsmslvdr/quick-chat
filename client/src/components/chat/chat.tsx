@@ -1,7 +1,6 @@
 import { Card } from "@components/ui/card";
 import { MessageForm } from "@components/ui/form";
-import { Messages } from "@contexts/chat-provider";
-import { useChat } from "@hooks/useChat";
+import { Messages, useChat } from "@providers/chat-provider";
 
 function OtherUserBox() {
     const { otherUser } = useChat();
