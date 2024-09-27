@@ -4,7 +4,7 @@ import { Button } from '../button';
 import { useChat } from '@providers/chat-provider';
 
 export function MessageForm() {
-    const { status, leaveChat, startChat, isOtherUserDisconnected, otherUser, user, sendMessage } = useChat();
+    const { leaveChat, startChat, isOtherUserDisconnected, otherUser, user, sendMessage, clearMessages } = useChat();
 
     const [message, setMessage] = useState('');
 
@@ -25,6 +25,7 @@ export function MessageForm() {
         }
 
         leaveChat();
+        clearMessages();
         startChat(currentUserName);
     }
 

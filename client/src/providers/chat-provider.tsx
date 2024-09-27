@@ -13,6 +13,7 @@ type ChatContextType = {
     startChat: (name: string) => void;
     otherUser: string | undefined;
     sendMessage: (content: string) => void;
+    clearMessages: () => void;
 };
 
 type CurrentUser = {
@@ -49,6 +50,10 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         socket?.emit("leaveChat");
         setMessage("You have left the chat");
         setStatus(null);
+    }
+
+    function clearMessages() {
+        setMessages(null);
     }
 
     function startChat(name: string) {
@@ -136,7 +141,8 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         isOtherUserDisconnected,
         otherUser,
         messages,
-        sendMessage
+        sendMessage,
+        clearMessages
     };
 
     return (
